@@ -34,7 +34,6 @@ export const useRivals = (teamId: string | undefined) => {
         .select("*")
         .eq("team_id", teamId);
 
-      console.log(data, "buse");
       if (error) {
         console.error("Error fetching rivals:", error);
         setError(error.message);

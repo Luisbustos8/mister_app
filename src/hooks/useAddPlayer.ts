@@ -23,18 +23,19 @@ export const UseAddPlayer = () => {
   const addPlayer = async (playerData: NewPlayerData) => {
     setError("");
     setLoading(true);
+    console.log(user?.id);
 
-    if (user?.id) {
-      setError("Usuario no autenticado");
-      setLoading(false);
-      return;
-    }
+    // if (user?.id) {
+    //   setError("Usuario no autenticado");
+    //   setLoading(false);
+    //   return;
+    // }
 
-    if (!team?.id) {
-      setError("No se pudo encontrar el equipo");
-      setLoading(false);
-      return;
-    }
+    // if (!team?.id) {
+    //   setError("No se pudo encontrar el equipo");
+    //   setLoading(false);
+    //   return;
+    // }
 
     const { error } = await supabase
       .from("players")

@@ -3,6 +3,10 @@
 import { FormProvider, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import Input from "../../components/common/Input";
+import LeagueTable from "../../components/ui/LeagueTable";
+import NearbyMatches from "../../components/ui/NerbyMatches";
+import NextMatchCard from "../../components/ui/NextMatchCard";
+import TopPlayersByStat from "../../components/ui/TopPlayersByStats";
 import { useCreateTeam } from "../../services/queries/useCreateTeam";
 import { useTeam } from "../../services/queries/useTeam";
 import { useUserId } from "../../services/queries/useUserId";
@@ -88,16 +92,40 @@ export function Homepage() {
   return (
     <div className="p-4 flex flex-col">
       <h2 className="text-2xl font-bold mb-2 text-black">{team?.name}</h2>
-      {team?.squad?.length > 0 ? (
-        "Hay jugadores"
-      ) : (
-        <a
-          href="/dashboard/plantilla/add-player"
-          className="text-black underline text-lg"
-        >
-          Aún no hay jugadores creados, ¿Quieres añadirlos?
-        </a>
-      )}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <TopPlayersByStat
+          teamId={team.id}
+          stat="goals"
+          title="Top Goleadores"
+        />
+        <TopPlayersByStat
+          teamId={team.id}
+          stat="assists"
+          title="Top Asistentes"
+        />
+        <TopPlayersByStat
+          teamId={team.id}
+          stat="matches_played"
+          title="Más Partidos Jugados"
+        />
+        <LeagueTable
+          size="small"
+          teamName="A.D. Villaviciosa de Odón - Infantil A"
+        />
+        <NearbyMatches
+          className="col-span-2"
+          team={team}
+          teamId={team.id}
+          range={1}
+        />
+        <div className="col-span-3">
+          <NextMatchCard
+            teamId={team.id}
+            teamName={team.name}
+            logo={team.logo_url}
+          />
+        </div>
+      </div>
     </div>
   );
 }

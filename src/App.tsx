@@ -7,7 +7,9 @@ import { Homepage } from "./pages/Home/homePage";
 
 import { useAuth } from "./context/AuthContext";
 import CalendarioPage from "./pages/Calendar/CalendarPage";
+import EditJornadaPage from "./pages/Calendar/EditJornadaPage";
 import LoadCalendar from "./pages/Calendar/LoadCalendar";
+import ConvocatoriaPage from "./pages/Convocatoria/ConvocatoriaPage";
 import LoginPage from "./pages/Login";
 import { RivalForm } from "./pages/Rivals/AddRivalForm";
 import { RivalDetail } from "./pages/Rivals/RivalDetail";
@@ -52,6 +54,14 @@ export default function App() {
           <Route
             path="/dashboard/calendario/add-calendar"
             element={<LoadCalendar />}
+          />
+          <Route
+            path="/dashboard/calendario/editar-jornada/:id"
+            element={<EditJornadaPage />}
+          />
+          <Route
+            path="/dashboard/convocatoria/:matchId"
+            element={<ConvocatoriaPage />}
           />
         </Route>
       </Routes>

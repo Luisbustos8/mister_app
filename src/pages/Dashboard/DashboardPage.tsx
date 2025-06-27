@@ -1,7 +1,5 @@
 /** @format */
 
-// src/pages/Dashboard.tsx
-
 import { Calendar, Power, ShieldHalf } from "lucide-react";
 import { AiOutlineTeam } from "react-icons/ai";
 import { MdSpaceDashboard } from "react-icons/md";
@@ -13,7 +11,8 @@ export default function DashboardPage() {
   const session = user;
 
   return (
-    <div className="flex min-h-screen bg-gray-900 text-white">
+    <div className="flex h-screen bg-gray-900 text-white overflow-hidden">
+      {/* Sidebar fijo */}
       <aside className="w-64 bg-gray-800 p-6 flex flex-col justify-between">
         <div className="space-y-8">
           <div>
@@ -64,7 +63,8 @@ export default function DashboardPage() {
         </button>
       </aside>
 
-      <main className="flex-1 p-8 bg-gray-300">
+      {/* Contenido desplazable */}
+      <main className="flex-1 overflow-y-auto h-screen p-8 bg-gray-300 text-black">
         <Outlet />
       </main>
     </div>

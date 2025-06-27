@@ -1,56 +1,41 @@
 /** @format */
 
-import { useState } from "react";
-
-import { useCalendar } from "../../context/CalendarFormContext";
+import { useNavigate } from "react-router-dom";
 import type { Jornada } from "../../types/calendar";
-import { CalendarMatchEditor } from "./CalendarMatchEditor";
 
-export default function JornadaItem({
-  jornada,
-  jornadaIndex,
-}: {
-  jornada: Jornada;
-  jornadaIndex: number;
-}) {
-  const { jornadas, setJornadas } = useCalendar();
-  const [date, setDate] = useState(jornada.match_date);
+export default function JornadaItem({ jornada }: { jornada: Jornada }) {
+  const navigate = useNavigate();
 
-  const updateMatch = (
-    matchIdx: number,
-    match: { home_team: string; away_team: string }
-  ) => {
-    const updated = [...jornadas];
-    updated[jornadaIndex].matches[matchIdx] = match;
-    setJornadas(updated);
-  };
-
-  const updateDate = (newDate: string) => {
-    setDate(newDate);
-    const updated = [...jornadas];
-    updated[jornadaIndex].match_date = newDate;
-    setJornadas(updated);
+  const handleClick = () => {
+    navigate(`/dashboard/calendario/editar-jornada/${jornada.id}`);
   };
 
   return (
-    <div className="p-4 border rounded mb-4">
-      <h3 className="font-bold mb-2">Jornada {jornada.matchday_number}</h3>
-      <input
-        type="date"
-        value={date}
-        onChange={(e) => updateDate(e.target.value)}
-        className="mb-2 block"
-      />
-      {jornada.matches.map((match, mi) => (
-        <CalendarMatchEditor
-          key={mi}
-          value={match}
-          onChange={(val) => updateMatch(mi, val)}
-          homeOptions={[]}
-          awayOptions={[]}
-          disabled={false}
-        />
-      ))}
+    <div
+      onClick={handleClick}
+      className="p-4 border rounded mb-4 cursor-pointer bg-white rounded-xl"
+    >
+      <h3 className="font-bold mb-2 text-black text-xl">
+        Jornada {jornada.matchday_number}
+      </h3>
+      <p className="text-sm text-gray-600 mb-2">Fecha: {jornada.match_date}</p>
+
+      <ul className="space-y-1">
+        {jornada.matches.map((match, i) => (
+          <li
+            key={i}
+            className="text-sm text-black flex border border-gray-400 p-2"
+          >
+            <p className="w-[50%] flex justify-start">{match.home_team}</p>{" "}
+            <div className="flex  w-[5%] items-center text-sm justify-between">
+              {match.home_goals !== null && match.away_goals !== null
+                ? `${match.home_goals} - ${match.away_goals}`
+                : "VS"}
+            </div>
+            <p className="w-[50%] flex justify-end">{match.away_team ?? ""}</p>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
